@@ -15,8 +15,7 @@ link:/understanding/REST[RESTful] front end.
 You will build a Spring application that lets you create and retrieve `Person` objects
 stored in a database by using Spring Data REST. Spring Data REST takes the features of
 https://spring.io/projects/spring-hateoas[Spring HATEOAS] and
-https://spring.io/projects/spring-data-jpa[Spring Data JPA] and automatically combines them
-together.
+https://spring.io/projects/spring-data-jpa[Spring Data JPA] and automatically combines them.
 
 NOTE: Spring Data REST also supports link:/guides/gs/accessing-neo4j-data-rest[Spring Data
 Neo4j], link:/guides/gs/accessing-gemfire-data-rest[Spring Data Gemfire], and
@@ -34,25 +33,30 @@ To manually initialize the project:
 
 . Navigate to https://start.spring.io.
 This service pulls in all the dependencies you need for an application and does most of the setup for you.
-. Choose either Gradle or Maven and the language you want to use. This guide assumes that you chose Java.
+. Choose either Gradle or Maven and the language you want to use.
 . Click *Dependencies* and select *Rest Repositories*, *Spring Data JPA*, and *H2 Database*.
 . Click *Generate*.
 . Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
 
 NOTE: If your IDE has the Spring Initializr integration, you can complete this process from your IDE.
 
-NOTE: You can also fork the project from Github and open it in your IDE or other editor.
+NOTE: You can also fork the project from GitHub and open it in your IDE or other editor.
 
 [[initial]]
 == Create a Domain Object
 
-Create a new domain object to present a person, as the following listing (in
-  `src/main/java/com/example/accessingdatarest/Person.java`) shows:
+Create a new domain object to present a person, as the following listing shows:
 
 ====
-[source,java,tabsize=2]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
 include::complete/src/main/java/com/example/accessingdatarest/Person.java[]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/accessingdatarest/Person.kt[]
 ----
 ====
 
@@ -61,13 +65,18 @@ configured to be automatically generated, so you need not deal with that.)
 
 == Create a Person Repository
 
-Next, you need to create a simple repository, as the following listing (in
-  `src/main/java/com/example/accessingdatarest/PersonRepository.java`) shows:
+Next, you need to create a simple repository, as the following listing shows:
 
 ====
-[source,java,tabsize=2]
+[source,java,indent=0,subs="verbatim,quotes",role="primary"]
+.Java
 ----
 include::complete/src/main/java/com/example/accessingdatarest/PersonRepository.java[]
+----
+[source,kotlin,indent=0,subs="verbatim,quotes",role="secondary"]
+.Kotlin
+----
+include::complete-kotlin/src/main/kotlin/com/example/accessingdatarest/PersonRepository.kt[]
 ----
 ====
 
@@ -88,34 +97,34 @@ Here you have also defined a custom query to retrieve a list of `Person` objects
 the `lastName`. You can see how to invoke it later in this guide.
 
 Spring Boot automatically spins up Spring Data JPA to create a concrete implementation of
-the `PersonRepository` and configure it to talk to a back end in-memory database by using
+the `PersonRepository` and configure it to talk to a backend in-memory database by using
 JPA.
 
 Spring Data REST builds on top of Spring MVC. It creates a collection of Spring MVC
 controllers, JSON converters, and other beans to provide a RESTful front end. These
 components link up to the Spring Data JPA backend. When you use Spring Boot, this is all
-autoconfigured. If you want to investigate how that works, by looking at the
+autoconfigured. If you want to investigate how that works, look at the
 `RepositoryRestMvcConfiguration` in Spring Data REST.
 
 == Running the Application
 
 You can now run the application by executing the main method in `AccessingDataRestApplication`.
-You can run the program from your IDE, or by executing the following Gradle command in the project root directory:
-```
+You can run the program from your IDE or by executing the following Gradle command in the project root directory:
+----
 ./gradlew bootRun
-```
+----
 
 Alternatively, you could use Maven to run the application using the command:
-```
+----
 ./mvnw spring-boot:run
-```
+----
 
 == Test the Application
 
 Now that the application is running, you can test it. You can use any REST client you
 wish. The following examples use the *nix tool, `curl`.
 
-First you want to see the top level service. The following example shows how to do so:
+First, you want to see the top-level service. The following example shows how to do so:
 
 ====
 [src,bash]
@@ -303,7 +312,7 @@ $ curl http://localhost:8080/people/search/findByLastName?name=Baggins
 ----
 ====
 
-Because you defined it to return `List<Person>` in the code, it returns all of the
+Because you defined it to return `List<Person>` in the code, it returns all
 results. If you had defined it to return only `Person`, it picks one of the `Person`
 objects to return. Since this can be unpredictable, you probably do not want to do that
 for queries that can return multiple entries.
